@@ -1,0 +1,44 @@
+
+//======================================================
+//================= ПЕРЕМЕННЫЕ =========================
+//======================================================
+
+$main_color: #000000;
+
+//======================================================
+//================== МИКСИНЫ ===========================
+//======================================================
+
+@mixin font($size, $weight, $line-height, $color: $main_color) {
+  font-size: $size;
+  font-weight: $weight;
+  line-height: $line-height;
+  color: $color;
+}
+
+@mixin blik($size, $top, $left ){
+  position: absolute;
+  top: $top;
+  left: $left;
+  height: $size;
+  width: $size;
+}
+
+@mixin wrapper($width) {
+  width: $width;
+  margin: 0 auto;
+}
+
+@mixin wh_size($width, $height, $type-circle:none) {
+  width: $width;
+  height: $height;
+
+  @if $type-circle == circle {
+    border-radius:100%;
+  }
+  @else if $type-circle == edge {
+    border-radius:30px;
+  }
+  @else {
+  }
+}
