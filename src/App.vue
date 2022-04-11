@@ -1,8 +1,14 @@
 <template>
-  <div>
+  <div class="App">
 <!--    <Like></Like>-->
-    <PostForm></PostForm>
-    <PostList></PostList>
+    <h2>Страница с постами</h2>
+    <ui-button class="btn-cp" @click="showDialog">Создать пост</ui-button>
+    <ui-dialog v-model:show="dialogVisible">
+      <PostForm class="dialog" @create="createPostOut"></PostForm>
+    </ui-dialog>
+
+    <PostList :posts="posts"
+              @remove = "removePost"></PostList>
   </div>
 </template>
 
@@ -11,9 +17,11 @@
 // import Like from "./components/v-Like"
 import PostForm from "./components/PostForm"
 import PostList from "./components/PostList"
+import UiDialog from "@/components/UI/uiDialog";
 export default {
   name: 'App',
   components: {
+    UiDialog,
     // Like,
     PostList,
     PostForm
@@ -24,20 +32,21 @@ export default {
         {id: 1, title: 'JavaScript', body: 'Описание поста'},
         {id: 2, title: 'JavaScript 1', body: 'Описание поста'},
         {id: 3, title: 'JavaScript 2', body: 'Описание поста'},
-      ]
+      ],
+      dialogVisible: false,
     }
   },
   methods: {
-    createPost() {
-      const newPost = {
-        id: Date.now(),
-        title: this.title,
-        body: this.body
-      }
-      this.posts.push(newPost);
-      this.title = "";
-      this.body = "";
+    createPostOut(post) {
+     this.posts.push(post);
+      this.dialogVisible = false;
     },
+    removePost(post) {
+        this.posts = this.posts.filter( p=> p.id !== post.id)
+    },
+    showDialog() {
+      this.dialogVisible = true;
+    }
   }
 }
 </script>
@@ -52,6 +61,10 @@ export default {
   box-sizing: border-box;
   font-family: sans-serif;
   font-size: 18px;
+}
+
+.btn-cp {
+  margin-top: 15px;
 }
 
 </style>
